@@ -2,6 +2,7 @@ package com.example.tiktaktoe.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -40,56 +41,56 @@ fun Home(
     ) {
         Text(
             modifier = Modifier,
-            fontSize = 32.sp,
+            fontSize = 48.sp,
             text="Tik-Tak-Toe",
-            color = colorResource(R.color.skyBueTikTakToe),
+            color = MaterialTheme.colorScheme.tertiary,
             style = MaterialTheme.typography.titleMedium
         )
         Spacer(modifier = Modifier.size(64.dp))
         OutlinedTextField(
             value = user1,
             onValueChange = {onTextFieldChange1(it)},
-
             label = { Text("Usuario 1")},
         )
         Spacer(modifier = Modifier.size(16.dp))
         OutlinedTextField(
             value = user2,
-
             onValueChange = {onTextFieldChange2(it)},
-
             label = { Text("Usuario 2")},
         )
-        Spacer(modifier = Modifier.size(16.dp))
-        FilledTonalButton(
-            onClick = { onBoardSizeSelected(3) },
-            colors = ButtonDefaults.filledTonalButtonColors(
-                containerColor = colorResource(R.color.bluePure),
-                contentColor = colorResource(R.color.white)
-            )
-        ) {
-            Text("3x3")
-        }
-        Spacer(modifier = Modifier.size(8.dp))
-        FilledTonalButton(
+        Spacer(modifier = Modifier.size(32.dp))
+        Row {
+            FilledTonalButton(
+                onClick = { onBoardSizeSelected(3) },
+                colors = ButtonDefaults.filledTonalButtonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            ) {
+                Text("3x3")
+            }
+            Spacer(modifier = Modifier.size(8.dp))
+            FilledTonalButton(
                 onClick = { onBoardSizeSelected(4) },
                 colors = ButtonDefaults.filledTonalButtonColors(
-                containerColor = colorResource(R.color.redPure),
-                contentColor = colorResource(R.color.white)
-            )
-        )  {
-            Text("4x4")
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary
+                )
+            )  {
+                Text("4x4")
+            }
+            Spacer(modifier = Modifier.size(8.dp))
+            FilledTonalButton(
+                onClick = { onBoardSizeSelected(5) },
+                colors = ButtonDefaults.filledTonalButtonColors(
+                    containerColor = MaterialTheme.colorScheme.tertiary,
+                    contentColor = MaterialTheme.colorScheme.onTertiary
+                )
+            )  {
+                Text("5x5")
+            }
         }
-        Spacer(modifier = Modifier.size(8.dp))
-        FilledTonalButton(
-            onClick = { onBoardSizeSelected(5) },
-            colors = ButtonDefaults.filledTonalButtonColors(
-                containerColor = colorResource(R.color.bluePure),
-                contentColor = colorResource(R.color.white)
-            )
-        )  {
-            Text("5x5")
-        }
+
     }
 }
 

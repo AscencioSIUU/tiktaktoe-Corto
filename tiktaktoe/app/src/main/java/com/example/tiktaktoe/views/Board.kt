@@ -6,12 +6,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,8 +39,8 @@ fun Board(
 ) {
     BoxWithConstraints(
         modifier = Modifier
-            .padding(16.dp),
-
+            .padding(16.dp)
+            ,
         contentAlignment = Alignment.Center
     ) {
         // Calcular el tamaño de la celda en función del tamaño mínimo disponible (ancho o alto)
@@ -51,7 +53,7 @@ fun Board(
         }
         LazyVerticalGrid(columns = GridCells.Fixed(size)) {
             items(size * size) {item ->
-                Cell(value = boardViewModel.getCell(item).state, onClick = { boardViewModel.changeState(boardViewModel.getCell(item), boardViewModel.player)}, size = 150.dp )
+                Cell(value = boardViewModel.getCell(item).state, onClick = { boardViewModel.changeState(boardViewModel.getCell(item), boardViewModel.player)}, size = 125.dp )
             }
         }
     }
@@ -60,12 +62,13 @@ fun Board(
 @Composable
 fun DrawGridLines(size: Int, cellSize: Dp) {
     val cellSizePx = with(LocalDensity.current) { cellSize.toPx() }
-
+    val color = MaterialTheme.colorScheme.onBackground
     Canvas(modifier = Modifier.size(cellSize * size)) {
         // Líneas horizontales
+
         for (i in 1 until size) {
             drawLine(
-                color = Color.Black,
+                color = color,
                 start = Offset(0f, i * cellSizePx),
                 end = Offset(size * cellSizePx, i * cellSizePx),
                 strokeWidth = 8f
@@ -75,7 +78,7 @@ fun DrawGridLines(size: Int, cellSize: Dp) {
         // Líneas verticales
         for (i in 1 until size) {
             drawLine(
-                color = Color.Black,
+                color = color,
                 start = Offset(i * cellSizePx, 0f),
                 end = Offset(i * cellSizePx, size * cellSizePx),
                 strokeWidth = 8f
@@ -100,17 +103,15 @@ fun Cell(
         if (value == 1) {
             Icon(
                 Icons.Filled.Close,
-                contentDescription = "cell"
+                contentDescription = "cell",
+                tint = MaterialTheme.colorScheme.primary
             )
         } else if (value == 2) {
             Icon(
                 Icons.Outlined.Info,
-                contentDescription = "cell"
-            )
-        } else {
-            Icon(
-                Icons.Outlined.Favorite,
-                contentDescription = "cell"
+                contentDescription = "cell",
+                tint = MaterialTheme.colorScheme.tertiary
+
             )
         }
     }
@@ -121,17 +122,17 @@ fun ShowPlayer(player1 : String, player2 : String){
     Row {
         Text(
             text = player1,
-            color = colorResource(R.color.bluePure),
+            color = MaterialTheme.colorScheme.primary,
             fontSize = 32.sp,
             style = MaterialTheme.typography.titleSmall
             )
-                Spacer(modifier = Modifier.padding(8.dp))
+
 
         Spacer(modifier = Modifier.padding(8.dp))
 
         Text(
             text = "vs",
-            color = colorResource(R.color.skyBueTikTakToe),
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 32.sp,
             style = MaterialTheme.typography.titleSmall
         )
@@ -139,7 +140,7 @@ fun ShowPlayer(player1 : String, player2 : String){
 
         Text(
             text = player2,
-            color = colorResource(R.color.redPure),
+            color = MaterialTheme.colorScheme.tertiary,
             fontSize = 32.sp,
             style = MaterialTheme.typography.titleSmall
             )
@@ -157,8 +158,10 @@ fun AlignedBoard(boardViewModel: BoardViewModel,size: Int, player1: String, play
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ShowPlayer(player1 = player1, player2 = player2)
+        //Spacer(modifier = Modifier.size(8.dp))
         Board(boardViewModel = boardViewModel, size = size, onWin = onWin)
-        Text(if(boardViewModel.player == 1) "Es el turno de $player1" else "Es el turno de $player2")
+        //Spacer(modifier = Modifier.size(12.dp))
+        Text(if(boardViewModel.player == 1) "Es el turno de $player1" else "Es el turno de $player2", color = MaterialTheme.colorScheme.onBackground, fontSize = 20.sp)
     }
 }
 

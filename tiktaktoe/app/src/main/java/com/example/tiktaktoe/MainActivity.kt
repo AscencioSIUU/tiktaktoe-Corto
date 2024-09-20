@@ -24,8 +24,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.tiktaktoe.views.Home
 import com.example.tiktaktoe.views.AlignedBoard
 import android.util.Log
+import androidx.compose.material3.MaterialTheme
 
-import com.example.tiktaktoe.ui.theme.TiktaktoeTheme
+import com.example.tiktaktoe.ui.theme.MyAppTheme
 import com.example.tiktaktoe.viewmodels.BoardViewModel
 import com.example.tiktaktoe.views.WinnerPreview
 import com.example.tiktaktoe.views.WinnerView
@@ -35,7 +36,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AppTikTakToe()
+            MyAppTheme {
+                AppTikTakToe()
+            }
+
         }
     }
 }
@@ -50,7 +54,7 @@ fun AppTikTakToe(){
     val navController = rememberNavController()
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = colorResource(R.color.white)
+        color = MaterialTheme.colorScheme.background
     ) {
 
 
@@ -103,5 +107,8 @@ fun AppTikTakToe(){
 @Preview
 @Composable
 fun Previewapp(){
-    AppTikTakToe()
+    MyAppTheme {
+        AppTikTakToe()
+    }
+
 }
