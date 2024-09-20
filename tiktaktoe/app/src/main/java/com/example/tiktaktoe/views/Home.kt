@@ -24,13 +24,13 @@ import androidx.compose.ui.unit.sp
 import com.example.tiktaktoe.R
 
 @Composable
-fun home(
-    onUser1Changed: (String) -> Unit,
-    onUser2Changed: (String) -> Unit,
+fun Home(
+    user1: String,
+    user2: String,
     onBoardSizeSelected: (Int) -> Unit,
+    onTextFieldChange1: (String) -> Unit,
+    onTextFieldChange2: (String) -> Unit
 ){
-    var user1 by remember { mutableStateOf("Kelevrinbor") }
-    var user2 by remember { mutableStateOf("Filiberto") }
 
     Column(
         modifier = Modifier
@@ -48,20 +48,17 @@ fun home(
         Spacer(modifier = Modifier.size(64.dp))
         OutlinedTextField(
             value = user1,
-            onValueChange = {
-                user1 = it
-                onUser1Changed(it)
-            },
-            label = { Text("Usuario 1")}
+            onValueChange = {onTextFieldChange1(it)},
+
+            label = { Text("Usuario 1")},
         )
         Spacer(modifier = Modifier.size(16.dp))
         OutlinedTextField(
             value = user2,
-            onValueChange = {
-                user2 = it
-                onUser2Changed(it)
-            },
-            label = { Text("Usuario 2")}
+
+            onValueChange = {onTextFieldChange2(it)},
+
+            label = { Text("Usuario 2")},
         )
         Spacer(modifier = Modifier.size(16.dp))
         FilledTonalButton(
@@ -96,15 +93,4 @@ fun home(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun previewHome(){
-    var user1 by remember { mutableStateOf("") }
-    var user2 by remember { mutableStateOf("") }
-    var boardSize by remember { mutableStateOf(3) }
-    home(
-        onUser1Changed = { user1 = it },
-        onUser2Changed = { user2 = it },
-        onBoardSizeSelected = { boardSize = it }
-    )
-}
+

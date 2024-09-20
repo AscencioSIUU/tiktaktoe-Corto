@@ -1,6 +1,5 @@
 package com.example.tiktaktoe
 
-import Board
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,84 +21,87 @@ import com.example.tiktaktoe.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
-import com.example.tiktaktoe.views.home
+import com.example.tiktaktoe.views.Home
+import com.example.tiktaktoe.views.AlignedBoard
 import android.util.Log
 
 import com.example.tiktaktoe.ui.theme.TiktaktoeTheme
+import com.example.tiktaktoe.viewmodels.BoardViewModel
+import com.example.tiktaktoe.views.WinnerPreview
+import com.example.tiktaktoe.views.WinnerView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var user1 by remember { mutableStateOf("") }
-            var user2 by remember { mutableStateOf("") }
-            var boardSize by remember { mutableStateOf(0) }
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = colorResource(R.color.white)
-            ) {
-
-                val navController = rememberNavController()
-
-                NavHost(navController = navController, startDestination = "homeScreen" ) {
-                    composable(route = "homeScreen") {
-                        home(
-                            onUser1Changed = { user1 = it },
-                            onUser2Changed = { user2 = it },
-                            onBoardSizeSelected = { size ->
-                                if (size > 0) {
-                                    boardSize = size
-                                    navController.navigate("boardScreen/$size")
-                                }
-                            }
-                        )
-                    }
-                    composable(route = "boardScreen/{boardSize}") { backStackEntry ->
-                        val boardSize = backStackEntry.arguments?.getString("boardSize")?.toInt() ?: 0
-                        Board(size = boardSize)
-                    }
-                }
-            }
+            AppTikTakToe()
         }
     }
 }
 
 @Composable
-fun appTikTakToe(){
+fun AppTikTakToe(){
     var user1 by remember { mutableStateOf("") }
     var user2 by remember { mutableStateOf("") }
-    var boardSize by remember { mutableStateOf(0) }
+    var boardSize by remember {
+        mutableStateOf(0)
+    }
+    val navController = rememberNavController()
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = colorResource(R.color.white)
     ) {
 
-        val navController = rememberNavController()
+
 
         NavHost(navController = navController, startDestination = "homeScreen" ) {
+
             composable(route = "homeScreen") {
-                home(
-                    onUser1Changed = { user1 = it },
-                    onUser2Changed = { user2 = it },
-                    onBoardSizeSelected = { size ->
+                Home(
+                    user1 = user1,
+                    user2 = user2,
+
+                    onTextFieldChange1 = {value -> user1 = value},
+                    onTextFieldChange2 = {value ->  user2= value},
+                    onBoardSizeSelected = {
+                            size ->
                         if (size > 0) {
                             boardSize = size
-                            navController.navigate("boardScreen/$size")
+                            navController.navigate("boardScreen/$size/$user1/$user2")
                         }
                     }
                 )
             }
-            composable(route = "boardScreen/{boardSize}") { backStackEntry ->
-                val boardSize = backStackEntry.arguments?.getString("boardSize")?.toInt() ?: 0
-                Board(size = boardSize)
+            composable(route = "boardScreen/{boardSize}/{user1}/{user2}") { backStackEntry ->
+                boardSize = backStackEntry.arguments?.getString("boardSize")?.toInt() ?: 0
+                user1 = backStackEntry.arguments?.getString("user1") ?: "Guest 1"
+                user2 = backStackEntry.arguments?.getString("user2") ?: "Guest 2"
+                val initialPlayer = (1..2).random()
+                val boardViewModel = BoardViewModel(boardSize, initialPlayer)
+
+                AlignedBoard(
+                    boardViewModel = boardViewModel,
+                    size = boardSize,
+                    player1 = user1,
+                    player2 = user2,
+                    onWin = {navController.navigate("winnerScreen/${if(boardViewModel.gameStatus == 1) user1 else user2}")})
             }
+
+            composable(route = "winnerScreen/{winner}") { backStackEntry ->
+                val winner = backStackEntry.arguments?.getString("winner") ?: "Guest1"
+
+                WinnerView(winner = winner)
+            }
+
+
+
         }
     }
 }
 
 @Preview
 @Composable
-fun previewapp(){
-    appTikTakToe()
+fun Previewapp(){
+    AppTikTakToe()
 }

@@ -1,3 +1,5 @@
+package com.example.tiktaktoe.views
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -23,17 +25,20 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import com.example.tiktaktoe.R
+import com.example.tiktaktoe.viewmodels.BoardViewModel
 import kotlin.math.min
 
 @Composable
 fun Board(
+    boardViewModel: BoardViewModel,
     size: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onWin: () -> Unit
 ) {
     BoxWithConstraints(
         modifier = Modifier
-            .padding(16.dp)
-            .fillMaxSize(),
+            .padding(16.dp),
+
         contentAlignment = Alignment.Center
     ) {
         // Calcular el tamaño de la celda en función del tamaño mínimo disponible (ancho o alto)
@@ -41,18 +46,12 @@ fun Board(
 
         // Dibujar las líneas del tablero
         DrawGridLines(size = size, cellSize = cellSize)
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(size),
-            modifier = Modifier
-                .size(cellSize * size) // Ajustar el tamaño del grid al del tablero
-        ) {
-            items(size * size) { item ->
-                Cell(
-                    value = 0,
-                    size = cellSize,
-                    onClick = { /* TODO*/ }
-                )
+        if(boardViewModel.gameStatus != 0){
+            onWin()
+        }
+        LazyVerticalGrid(columns = GridCells.Fixed(size)) {
+            items(size * size) {item ->
+                Cell(value = boardViewModel.getCell(item).state, onClick = { boardViewModel.changeState(boardViewModel.getCell(item), boardViewModel.player)}, size = 150.dp )
             }
         }
     }
@@ -118,23 +117,25 @@ fun Cell(
 }
 
 @Composable
-fun showPlayer(player1 : String, player2 : String){
+fun ShowPlayer(player1 : String, player2 : String){
     Row {
         Text(
             text = player1,
             color = colorResource(R.color.bluePure),
             fontSize = 32.sp,
             style = MaterialTheme.typography.titleSmall
-
             )
                 Spacer(modifier = Modifier.padding(8.dp))
-        Text("x",
-            color = colorResource(R.color.bluePure),
+
+        Spacer(modifier = Modifier.padding(8.dp))
+
+        Text(
+            text = "vs",
+            color = colorResource(R.color.skyBueTikTakToe),
             fontSize = 32.sp,
             style = MaterialTheme.typography.titleSmall
-        )  
-
-        Spacer(modifier = Modifier.padding(16.dp))
+        )
+        Spacer(modifier = Modifier.padding(8.dp))
 
         Text(
             text = player2,
@@ -143,30 +144,26 @@ fun showPlayer(player1 : String, player2 : String){
             style = MaterialTheme.typography.titleSmall
             )
         Spacer(modifier = Modifier.padding(8.dp))
-        Text(
-            "o",
-            color = colorResource(R.color.redPure),
-            fontSize = 32.sp,                          
-            style = MaterialTheme.typography.titleSmall
-        )
+
     }
 }
 
 @Composable
-fun alignedBoard(size: Int, player1: String, player2: String){
+fun AlignedBoard(boardViewModel: BoardViewModel,size: Int, player1: String, player2: String, onWin: () -> Unit){
     Column(
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        showPlayer(player1 = player1, player2 = player2)
-        Board(size = size)
+        ShowPlayer(player1 = player1, player2 = player2)
+        Board(boardViewModel = boardViewModel, size = size, onWin = onWin)
+        Text(if(boardViewModel.player == 1) "Es el turno de $player1" else "Es el turno de $player2")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun boardPreview() {
-    alignedBoard(size = 3, player1 = "Jaime", player2 = "Pepe")
+fun BoardPreview() {
+    AlignedBoard(boardViewModel = BoardViewModel(3,1) ,size = 3, player1 = "Jaime", player2 = "Pepe", onWin = {})
 }
