@@ -10,14 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="018aeee4-8e2a-4504-adfe-214fe9ee2f94" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/app/tiktaktoe.app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/ui/theme/Color.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/ui/theme/Color.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/ui/theme/Theme.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/ui/theme/Theme.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/ui/theme/Type.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/ui/theme/Type.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/views/Board.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/views/Board.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/views/Home.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tiktaktoe/app/src/main/java/com/example/tiktaktoe/views/Home.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +20,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\50256\.android\avd\Pixel_Fold_API_35.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=RF8X60H4C4R)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$/tiktaktoe">
       <ProjectState />
