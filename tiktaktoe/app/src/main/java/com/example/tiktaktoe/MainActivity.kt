@@ -5,30 +5,22 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.tiktaktoe.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import com.example.tiktaktoe.views.Home
 import com.example.tiktaktoe.views.AlignedBoard
-import android.util.Log
 import androidx.compose.material3.MaterialTheme
-
 import com.example.tiktaktoe.ui.theme.MyAppTheme
 import com.example.tiktaktoe.viewmodels.BoardViewModel
-import com.example.tiktaktoe.views.WinnerPreview
 import com.example.tiktaktoe.views.WinnerView
 
 class MainActivity : ComponentActivity() {
@@ -95,11 +87,12 @@ fun AppTikTakToe(){
             composable(route = "winnerScreen/{winner}") { backStackEntry ->
                 val winner = backStackEntry.arguments?.getString("winner") ?: "Guest1"
 
-                WinnerView(winner = winner)
+                WinnerView(
+                    winner = winner
+                ){
+                    navController.navigate("homeScreen")
+                }
             }
-
-
-
         }
     }
 }

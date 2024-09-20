@@ -47,7 +47,7 @@ class BoardViewModel(size: Int, initialPlayer: Int) {
             if (_cells[index - diagonalStepNegative].state == cell.state) {
                 checkSingleStep(
                     _cells[index - diagonalStepNegative],
-                    -diagonalStepNegative
+                    diagonalStepNegative*-1
                 )
             }
         }
@@ -63,7 +63,7 @@ class BoardViewModel(size: Int, initialPlayer: Int) {
             if (_cells[index - diagonalStepPositive].state == cell.state) {
                 checkSingleStep(
                     _cells[index - diagonalStepPositive],
-                    -diagonalStepPositive
+                    diagonalStepPositive*-1
                 )
             }
         }
@@ -92,7 +92,7 @@ class BoardViewModel(size: Int, initialPlayer: Int) {
 
         if (index - horizontalStep >= 0) {
             if (_cells[index - horizontalStep].state == cell.state) {
-                checkSingleStep(_cells[index - horizontalStep], -horizontalStep)
+                checkSingleStep(_cells[index - horizontalStep], horizontalStep*-1)
 
             }
         }
@@ -103,7 +103,7 @@ class BoardViewModel(size: Int, initialPlayer: Int) {
         }
         if (index - verticalStep >= 0) {
             if (_cells[index - verticalStep].state == cell.state) {
-                checkSingleStep(_cells[index - verticalStep], -verticalStep)
+                checkSingleStep(_cells[index - verticalStep], verticalStep*-1)
             }
         }
         if (index + verticalStep < N) {

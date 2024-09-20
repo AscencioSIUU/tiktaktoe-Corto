@@ -40,7 +40,7 @@ fun Board(
     BoxWithConstraints(
         modifier = Modifier
             .padding(16.dp)
-            ,
+        ,
         contentAlignment = Alignment.Center
     ) {
         // Calcular el tamaño de la celda en función del tamaño mínimo disponible (ancho o alto)
@@ -53,7 +53,10 @@ fun Board(
         }
         LazyVerticalGrid(columns = GridCells.Fixed(size)) {
             items(size * size) {item ->
-                Cell(value = boardViewModel.getCell(item).state, onClick = { boardViewModel.changeState(boardViewModel.getCell(item), boardViewModel.player)}, size = 125.dp )
+                Cell(value = boardViewModel.getCell(item).state,
+                    onClick = { boardViewModel.changeState(boardViewModel.getCell(item), boardViewModel.player)},
+                    size = cellSize
+                )
             }
         }
     }
@@ -125,7 +128,7 @@ fun ShowPlayer(player1 : String, player2 : String){
             color = MaterialTheme.colorScheme.primary,
             fontSize = 32.sp,
             style = MaterialTheme.typography.titleSmall
-            )
+        )
 
 
         Spacer(modifier = Modifier.padding(8.dp))
@@ -143,14 +146,20 @@ fun ShowPlayer(player1 : String, player2 : String){
             color = MaterialTheme.colorScheme.tertiary,
             fontSize = 32.sp,
             style = MaterialTheme.typography.titleSmall
-            )
+        )
         Spacer(modifier = Modifier.padding(8.dp))
 
     }
 }
 
 @Composable
-fun AlignedBoard(boardViewModel: BoardViewModel,size: Int, player1: String, player2: String, onWin: () -> Unit){
+fun AlignedBoard(
+    boardViewModel: BoardViewModel,
+    size: Int,
+    player1: String,
+    player2: String,
+    onWin: () -> Unit
+){
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -168,5 +177,10 @@ fun AlignedBoard(boardViewModel: BoardViewModel,size: Int, player1: String, play
 @Preview(showBackground = true)
 @Composable
 fun BoardPreview() {
-    AlignedBoard(boardViewModel = BoardViewModel(3,1) ,size = 3, player1 = "Jaime", player2 = "Pepe", onWin = {})
+    AlignedBoard(
+        boardViewModel = BoardViewModel(5,1),
+        size = 5,
+        player1 = "Jaime",
+        player2 = "Pepe",
+        onWin = {})
 }
